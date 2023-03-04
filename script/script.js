@@ -43,12 +43,14 @@ const displayData = (data, limitData) => {
                       <div class="d-flex justify-content-between">
                         <div>
                             <h5 class="card-title">${hub.name}</h5>
-                            <p>${hub.published_in}</p>
+                            <div class="d-flex">
+                            
+                            <i class="fa-regular fa-calendar m-1"></i>
+                            <p>${ hub.published_in}</p>
+                            </div>
                         </div>
                         <div>
-                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="loadDetails('${hub.id}')">
-                             Show Details
-                         </button>
+                         <i class="fa-solid fa-circle-arrow-right h-1 text-danger" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="loadDetails('${hub.id}')"></i>
                             
                         </div>
                         </div>
