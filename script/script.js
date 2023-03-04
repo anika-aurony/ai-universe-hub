@@ -90,6 +90,8 @@ const hubDetails = details =>{
     console.log(details.image_link)
 
     const modalTitle = document.getElementById('Modal-html');
+
+    
     modalTitle.innerHTML = `   
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -137,7 +139,7 @@ const hubDetails = details =>{
           <h5 class="card-title">${details.input_output_examples[0].input}</h5>
           <p class="card-text">${details.input_output_examples[0].output}</p>
         </div>
-        <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" >${details.accuracy.score*100}% accuracy</p>
+        <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" id="accuracy" >${details.accuracy.score*100}% accuracy</p>
       </div>
     </div>
     
@@ -145,6 +147,10 @@ const hubDetails = details =>{
         
 
     `
+    if(details.accuracy.score == null){
+        const accurate = document.getElementById('accuracy');
+        accurate.classList.add('d-none')
+    }
 }
 
 const toggleSpinner = isLoading => {
