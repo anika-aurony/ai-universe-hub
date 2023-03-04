@@ -8,16 +8,31 @@ const loadData = (limitData) => {
 const card = document.getElementById('card-container');
 const displayData = (data, limitData) => {
 
+    console.log(data)
+    // Data sort by Date
+    if (limitData == 1) {
+        data.sort(function (a, b) {
+            return new Date(a.published_in) - new Date(b.published_in)
+        })
+        data.sort(function (a, b) {
+            return new Date(a.published_in) - new Date(b.published_in)
+        })
+
+    }
+    // Display 6 hubs
     let hubs = data;
     if (limitData == 6) {
         hubs = data.slice(0, 6);
 
     }
+
+    //Hide show all button for all display 
     if (limitData == 0) {
         const button = document.getElementById('loadAll');
         button.classList.add('d-none')
     }
 
+    // Display data
     for (const hub of hubs) {
 
         const div = document.createElement('div');
@@ -46,7 +61,7 @@ const displayData = (data, limitData) => {
                             <div class="d-flex">
                             
                             <i class="fa-regular fa-calendar m-1"></i>
-                            <p>${ hub.published_in}</p>
+                            <p>${hub.published_in}</p>
                             </div>
                         </div>
                         <div>
@@ -67,7 +82,8 @@ const displayData = (data, limitData) => {
     toggleSpinner(false);
 }
 
-document.getElementById('loadAll').addEventListener('click', (data) => {
+// Display All data
+document.getElementById('loadAll').addEventListener('click', () => {
     // start loader
     toggleSpinner(true);
     card.innerText = ''
@@ -81,19 +97,16 @@ loadData(6);
 // Load Details
 const loadDetails = id => {
     const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
-    console.log(url)
     fetch(url)
         .then(res => res.json())
         .then(data => hubDetails(data.data))
 }
 
-const hubDetails = details =>{
+const hubDetails = details => {
     console.log(details)
-    console.log(details.image_link)
 
     const modalTitle = document.getElementById('Modal-html');
 
-    
     modalTitle.innerHTML = `   
 
     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -106,7 +119,7 @@ const hubDetails = details =>{
 
           <div class="d-flex justify-content-between mb-3">
                     <div class="price-box fw-bold" style="color: green">${details.pricing ? details.pricing[0].price : 'Free of cost'} ${details.pricing ? details.pricing[0].plan : '/Basic'} </div>
-                    <div class="price-box fw-bold" style="color: orange">${details.pricing ? details.pricing[1].price :"Free of cost "} ${details.pricing ? details.pricing[1].plan : "/Pro"}</div>
+                    <div class="price-box fw-bold" style="color: orange">${details.pricing ? details.pricing[1].price : "Free of cost "} ${details.pricing ? details.pricing[1].plan : "/Pro"}</div>
                     <div class="price-box fw-bold" style="color: red">${details.pricing ? details.pricing[2].price : "Free of cost"} ${details.pricing ? details.pricing[2].plan : "/Enterprise"}</div>
          </div>
 
@@ -123,8 +136,8 @@ const hubDetails = details =>{
                 <h5 class="card-title text-center">Integrations</h5>
                 <ul>
                     <li style="font-size: small;">${details.integrations ? details.integrations[0] : "no data found"}</li>
-                    <li style="font-size: small;" id="integration1">${details.integrations ? details.integrations[1] : 'no data found' }</li>
-                    <li style="font-size: small;" id="integration2">${details.integrations ? details.integrations[2] : 'no data found' }</li>
+                    <li style="font-size: small;" id="integration1">${details.integrations ? details.integrations[1] : 'no data found'}</li>
+                    <li style="font-size: small;" id="integration2">${details.integrations ? details.integrations[2] : 'no data found'}</li>
 
                 </ul>
             </div>
@@ -141,38 +154,43 @@ const hubDetails = details =>{
           <h5 class="card-title">${details.input_output_examples ? details.input_output_examples[0].input : "Can you give any example"}</h5>
           <p class="card-text">${details.input_output_examples ? details.input_output_examples[0].output : 'No! Not yet take a break'}</p>
         </div>
-        <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" id="accuracy" >${details.accuracy.score*100}% accuracy</p>
+        <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" id="accuracy" >${details.accuracy.score * 100}% accuracy</p>
       </div>
     </div>
     
   </div>
         
-
     `
-    if(details.accuracy.score == null){
+    if (details.accuracy.score == null) {
         const accurate = document.getElementById('accuracy');
         accurate.classList.add('d-none')
     }
-    if(details.integrations[1] == undefined){
+    if (details.integrations[1] == undefined) {
         const integration1 = document.getElementById('integration1');
         integration1.classList.add('d-none')
     }
-    if(details.integrations[2] == undefined){
+    if (details.integrations[2] == undefined) {
         const integration2 = document.getElementById('integration2');
         integration2.classList.add('d-none')
     }
 }
 
+// Toggle Spinner
 const toggleSpinner = isLoading => {
     const loaderSection = document.getElementById('loader');
-    if(isLoading){
+    if (isLoading) {
         loaderSection.classList.remove('d-none')
     }
-    else{
+    else {
         loaderSection.classList.add('d-none');
     }
 }
 
 toggleSpinner(true);
 
+// Sort by date 
+document.getElementById('sortByDate').addEventListener('click', () => {
+    card.innerText = ''
+    loadData(1);
+})
 
