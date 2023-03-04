@@ -165,7 +165,7 @@ const hubDetails = details => {
         const accurate = document.getElementById('accuracy');
         accurate.classList.add('d-none')
     }
-    if (details.integrations[1] == undefined) {
+    if (details.integrations[1] == undefined ) {
         const integration1 = document.getElementById('integration1');
         integration1.classList.add('d-none')
     }
