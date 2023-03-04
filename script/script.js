@@ -61,9 +61,13 @@ const displayData = (data, limitData) => {
         `
         card.appendChild(div);
     }
+    // stop loader
+    toggleSpinner(false);
 }
 
 document.getElementById('loadAll').addEventListener('click', (data) => {
+    // start loader
+    toggleSpinner(true);
     card.innerText = ''
     loadData(0);
 
@@ -132,6 +136,7 @@ const hubDetails = details =>{
           <h5 class="card-title">${details.input_output_examples[0].input}</h5>
           <p class="card-text">${details.input_output_examples[0].output}</p>
         </div>
+        <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" >${details.accuracy.score*100}% accuracy</p>
       </div>
     </div>
     
@@ -139,12 +144,16 @@ const hubDetails = details =>{
         
 
     `
+}
 
-        
-    
-    
-    
-
+const toggleSpinner = isLoading => {
+    const loaderSection = document.getElementById('loader');
+    if(isLoading){
+        loaderSection.classList.remove('d-none')
+    }
+    else{
+        loaderSection.classList.add('d-none');
+    }
 }
 
 
