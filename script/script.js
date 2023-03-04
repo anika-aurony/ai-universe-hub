@@ -103,9 +103,9 @@ const hubDetails = details =>{
           <p class="card-text fw-semibold">${details.description}</p>
 
           <div class="d-flex justify-content-between mb-3">
-                    <div class="price-box fw-bold" style="color: green">${details.pricing[0].price} ${details.pricing[0].plan} </div>
-                    <div class="price-box fw-bold" style="color: orange">${details.pricing[1].price} ${details.pricing[1].plan}</div>
-                    <div class="price-box fw-bold" style="color: red">${details.pricing[2].price} ${details.pricing[2].plan}</div>
+                    <div class="price-box fw-bold" style="color: green">${details.pricing ? details.pricing[0].price : 'Free of cost'} ${details.pricing ? details.pricing[0].plan : 'Basic'} </div>
+                    <div class="price-box fw-bold" style="color: orange">${details.pricing ? details.pricing[1].price :"Free of cost "} ${details.pricing ? details.pricing[1].plan : "Pro"}</div>
+                    <div class="price-box fw-bold" style="color: red">${details.pricing ? details.pricing[2].price : "Free of cost"} ${details.pricing ? details.pricing[2].plan : "Enterprise"}</div>
          </div>
 
           <div class="d-flex justify-content-between">
@@ -120,9 +120,9 @@ const hubDetails = details =>{
             <div>
                 <h5 class="card-title text-center">Integrations</h5>
                 <ul>
-                    <li style="font-size: small;">${details.integrations[0]}</li>
-                    <li style="font-size: small;">${details.integrations[1] ? details.integrations[1] : 'no data found' }</li>
-                    <li style="font-size: small;">${details.integrations[2] ? details.integrations[2] : 'no data found' }</li>
+                    <li style="font-size: small;">${details.integrations ? details.integrations[0] : "no data found"}</li>
+                    <li style="font-size: small;">${details.integrations ? details.integrations[1] : 'no data found' }</li>
+                    <li style="font-size: small;">${details.integrations ? details.integrations[2] : 'no data found' }</li>
 
                 </ul>
             </div>
@@ -136,8 +136,8 @@ const hubDetails = details =>{
       <div class="card">
         <img src="${details.image_link[0]}" class="card-img-top" alt="...">
         <div class="card-body text-center">
-          <h5 class="card-title">${details.input_output_examples[0].input}</h5>
-          <p class="card-text">${details.input_output_examples[0].output}</p>
+          <h5 class="card-title">${details.input_output_examples ? details.input_output_examples[0].input : ""}</h5>
+          <p class="card-text">${details.input_output_examples ? details.input_output_examples[0].output : ''}</p>
         </div>
         <p class="text-bg-danger p-1 rounded-3 position-absolute top-0 end-0" style = "width: 110px" id="accuracy" >${details.accuracy.score*100}% accuracy</p>
       </div>
