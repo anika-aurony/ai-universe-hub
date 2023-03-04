@@ -73,6 +73,7 @@ document.getElementById('loadAll').addEventListener('click', (data) => {
 
 })
 
+
 loadData(6);
 
 // Load Details
@@ -156,6 +157,6 @@ const toggleSpinner = isLoading => {
     }
 }
 
-
+toggleSpinner(true);
     
 
