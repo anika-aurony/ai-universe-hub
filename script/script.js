@@ -1,20 +1,27 @@
-const loadData = () => {
+const loadData = (limitData) => {
     fetch('https://openapi.programming-hero.com/api/ai/tools')
         .then(res => res.json())
-        .then(data => displayData(data.data.tools))
+        .then(data => displayData(data.data.tools, limitData))
 }
 
-loadData();
 
-const displayData = (data) => {
+const card = document.getElementById('card-container');
+const displayData = (data, limitData) => {
     console.log(data[0]);
-    const hubs = data.slice(0, 6);
-    const card = document.getElementById('card-container');
+    let hubs = data;
+    if (limitData == 6) {
+        hubs = data.slice(0, 6);
+        
+    }
+    if(limitData == 0){
+        const button = document.getElementById('loadAll');
+        button.classList.add('d-none')
+    }
+
     for (const hub of hubs) {
         console.log(hub.features)
-        const features = hub.features
         const div = document.createElement('div');
-        
+
 
         div.classList.add('col')
         div.innerHTML = `
@@ -27,13 +34,22 @@ const displayData = (data) => {
                         <ol>
                             <li>${hub.features[0]}</li>
                             <li>${hub.features[1]}</li>
-                            <li id='li' >${hub.features[2] ? hub.features[2] : 'No other feature' }</li>
+                            <li id='li' >${hub.features[2] ? hub.features[2] : 'No other feature'}</li>
                             
                             
                         </ol>
                       </p>
-                      <hr class="mx-2">
-                      <h5 class="card-title">${hub.name}</h5>
+                      <hr class="mx-1">
+                      <div class="d-flex justify-content-between">
+                        <div>
+                            <h5 class="card-title">${hub.name}</h5>
+                            <p>${hub.published_in}</p>
+                        </div>
+                        <div>
+                             <button type="button" class="btn btn-outline-secondary">Button</button>
+                        </div>
+                        </div>
+
                     </div>
                     
 
@@ -42,10 +58,18 @@ const displayData = (data) => {
         `
         card.appendChild(div);
 
-        const featureId = document.getElementById('feature')
-        
+
     }
 
-    
+
 
 }
+
+document.getElementById('loadAll').addEventListener('click', (data) => {
+    card.innerText = ''
+    loadData(0);
+
+})
+
+
+loadData(6);
