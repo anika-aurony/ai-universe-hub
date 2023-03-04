@@ -7,19 +7,19 @@ const loadData = (limitData) => {
 
 const card = document.getElementById('card-container');
 const displayData = (data, limitData) => {
-    console.log(data[0]);
+
     let hubs = data;
     if (limitData == 6) {
         hubs = data.slice(0, 6);
-        
+
     }
-    if(limitData == 0){
+    if (limitData == 0) {
         const button = document.getElementById('loadAll');
         button.classList.add('d-none')
     }
 
     for (const hub of hubs) {
-        console.log(hub.features)
+
         const div = document.createElement('div');
 
 
@@ -46,7 +46,10 @@ const displayData = (data, limitData) => {
                             <p>${hub.published_in}</p>
                         </div>
                         <div>
-                             <button type="button" class="btn btn-outline-secondary">Button</button>
+                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop" onclick="loadDetails('${hub.id}')">
+                             Show Details
+                         </button>
+                            
                         </div>
                         </div>
 
@@ -57,12 +60,7 @@ const displayData = (data, limitData) => {
         
         `
         card.appendChild(div);
-
-
     }
-
-
-
 }
 
 document.getElementById('loadAll').addEventListener('click', (data) => {
@@ -71,5 +69,84 @@ document.getElementById('loadAll').addEventListener('click', (data) => {
 
 })
 
-
 loadData(6);
+
+// Load Details
+const loadDetails = id => {
+    const url = `https://openapi.programming-hero.com/api/ai/tool/${id}`;
+    console.log(url)
+    fetch(url)
+        .then(res => res.json())
+        .then(data => hubDetails(data.data))
+}
+
+const hubDetails = details =>{
+    console.log(details)
+    console.log(details.image_link)
+
+    const modalTitle = document.getElementById('Modal-html');
+    modalTitle.innerHTML = `   
+
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+    <div class="col">
+      <div class="card">
+        
+        <div class="card-body bg">
+          
+          <p class="card-text fw-semibold">${details.description}</p>
+
+          <div class="d-flex justify-content-between mb-3">
+                    <div class="price-box fw-bold" style="color: green">${details.pricing[0].price} ${details.pricing[0].plan} </div>
+                    <div class="price-box fw-bold" style="color: orange">${details.pricing[1].price} ${details.pricing[1].plan}</div>
+                    <div class="price-box fw-bold" style="color: red">${details.pricing[2].price} ${details.pricing[2].plan}</div>
+         </div>
+
+          <div class="d-flex justify-content-between">
+            <div class="" >
+                <h5 class="card-title">Features</h5>
+                <ul>
+                    <li style="font-size: small;">${details.features[1].feature_name}</li>
+                    <li style="font-size: small;">${details.features[2].feature_name}</li>
+                    <li style="font-size: small;">${details.features[3].feature_name}</li>
+                </ul>
+            </div>
+            <div>
+                <h5 class="card-title text-center">Integrations</h5>
+                <ul>
+                    <li style="font-size: small;">${details.integrations[0]}</li>
+                    <li style="font-size: small;">${details.integrations[1]}</li>
+                    <li style="font-size: small;">${details.integrations[2]}</li>
+
+                </ul>
+            </div>
+        </div>
+          
+          
+        </div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card">
+        <img src="${details.image_link[0]}" class="card-img-top" alt="...">
+        <div class="card-body text-center">
+          <h5 class="card-title">${details.input_output_examples[0].input}</h5>
+          <p class="card-text">${details.input_output_examples[0].output}</p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+        
+
+    `
+
+        
+    
+    
+    
+
+}
+
+
+    
+
