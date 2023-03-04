@@ -121,8 +121,8 @@ const hubDetails = details =>{
                 <h5 class="card-title text-center">Integrations</h5>
                 <ul>
                     <li style="font-size: small;">${details.integrations[0]}</li>
-                    <li style="font-size: small;">${details.integrations[1]}</li>
-                    <li style="font-size: small;">${details.integrations[2]}</li>
+                    <li style="font-size: small;">${details.integrations[1] ? details.integrations[1] : 'no data found' }</li>
+                    <li style="font-size: small;">${details.integrations[2] ? details.integrations[2] : 'no data found' }</li>
 
                 </ul>
             </div>
